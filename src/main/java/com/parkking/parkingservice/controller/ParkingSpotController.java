@@ -1,8 +1,10 @@
 package com.parkking.parkingservice.controller;
 
 import com.parkking.parkingservice.dto.parkingSpot.SaveParkingSpot;
+import com.parkking.parkingservice.dto.parkingSpot.UpdateParkingSpot;
 import com.parkking.parkingservice.model.ParkingSpot;
 import com.parkking.parkingservice.service.ParkingSpotService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,7 +16,8 @@ import java.util.Map;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/v1/parkingspots")
+@RequestMapping("/api/v1/parkingSpots")
+@SecurityRequirement(name = "bearerAuth")
 public class ParkingSpotController {
 
     @Autowired
@@ -31,6 +34,7 @@ public class ParkingSpotController {
     public ParkingSpot createParkingSpot(@RequestBody SaveParkingSpot parkingSpotDto) throws IOException {
         return parkingSpotService.saveParkingSpot(parkingSpotDto);
     }
+
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_MODERATOR') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<ParkingSpot> getParkingSpotById(@PathVariable Long id) {
@@ -44,12 +48,12 @@ public class ParkingSpotController {
     }
     @PutMapping
     @PreAuthorize("hasRole('ROLE_MODERATOR') or hasRole('ROLE_ADMIN')")
-    public ResponseEntity<ParkingSpot> updateParkingSpot(@RequestBody ParkingSpot parkingSpot) {
-        return ResponseEntity.ok(parkingSpotService.updateParkingSpot(parkingSpot));
+    public ResponseEntity<ParkingSpot> updateParkingSpot(@RequestBody UpdateParkingSpot updateParkingSpot) {
+        return ResponseEntity.ok(parkingSpotService.updateParkingSpot(updateParkingSpot));
     }
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<Map<String, Boolean>> deleteStore(@PathVariable Long id){
+    public ResponseEntity<Map<String, Boolean>> deleteParkingSpot(@PathVariable Long id){
         return ResponseEntity.ok(parkingSpotService.deleteParkingSpot(id));
     }
 }

@@ -54,12 +54,6 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private Set<Address> addresses;
 
-    @JsonIgnore
-    @NonNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "user_type")
-    private UserType userType;
-
     @CreationTimestamp
     @Column(updatable = false)
     private Instant createdAt;

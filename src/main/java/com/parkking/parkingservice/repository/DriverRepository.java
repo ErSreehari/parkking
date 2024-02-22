@@ -1,6 +1,6 @@
 package com.parkking.parkingservice.repository;
 
-import com.parkking.parkingservice.model.user.SpotOwner;
+import com.parkking.parkingservice.model.user.Driver;
 import com.parkking.parkingservice.model.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -8,7 +8,8 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface SpotOwnerRepository extends JpaRepository<SpotOwner, Long> {
+public interface DriverRepository extends JpaRepository<Driver, Long> {
 
-    Optional<SpotOwner> findByUser(User user);
+    Optional<Driver> findByUser(User user);
+
 }

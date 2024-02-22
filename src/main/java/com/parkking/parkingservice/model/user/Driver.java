@@ -37,4 +37,9 @@ public class Driver {
 
     @UpdateTimestamp
     private Instant updatedAt;
+
+    public Driver(String licenseNo, User user) {
+        this.licenseNo = licenseNo;
+        this.user = user;
+    }
 }

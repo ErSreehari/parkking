@@ -1,6 +1,7 @@
 package com.parkking.parkingservice.service.impl;
 
 import com.parkking.parkingservice.dto.parkingSpot.SaveParkingSpot;
+import com.parkking.parkingservice.dto.parkingSpot.UpdateParkingSpot;
 import com.parkking.parkingservice.model.Address;
 import com.parkking.parkingservice.model.ParkingSpot;
 import com.parkking.parkingservice.model.user.SpotOwner;
@@ -41,14 +42,13 @@ public class ParkingSpotServiceImpl implements ParkingSpotService {
     @Override
     public ParkingSpot saveParkingSpot(SaveParkingSpot parkingSpotDto) throws IOException {
         H3Core h3 = H3Core.newInstance();
-        ParkingSpot parkingSpot = new ParkingSpot();
+        ParkingSpot parkingSpot = new ParkingSpot(parkingSpotDto);
         Address address = addressRepository.findById(parkingSpotDto.getAddressId()).orElseThrow(() -> new RuntimeException("Address not found"));
         String hexCode = h3.latLngToCellAddress(address.getLatitude(), address.getLongitude(), 9);
         address.setHexCode(hexCode);
         addressRepository.save(address);
         SpotOwner owner = new SpotOwner("dummy", userRepository.findById(parkingSpotDto.getUserId()).orElseThrow(() -> new RuntimeException("User not found")));
         SpotOwner spotOwner = spotOwnerRepository.save(owner);
-
         parkingSpot.setAddress(address);
         parkingSpot.setSpotOwner(spotOwner);
         return parkingSpotRepository.save(parkingSpot);
@@ -60,7 +60,10 @@ public class ParkingSpotServiceImpl implements ParkingSpotService {
     }
 
     @Override
-    public ParkingSpot updateParkingSpot(ParkingSpot parkingSpot) {
+    public ParkingSpot updateParkingSpot(UpdateParkingSpot updateParkingSpot) {
+        ParkingSpot parkingSpot = parkingSpotRepository.findById(updateParkingSpot.getId()).orElseThrow(() -> new RuntimeException("Parking spot not found"));
+        parkingSpot.setSpotType(updateParkingSpot.getSpotType());
+        parkingSpot.setAddress(addressRepository.findById(updateParkingSpot.getAddressId()).orElseThrow(() -> new RuntimeException("Address not found")));
         return parkingSpotRepository.save(parkingSpot);
     }
 
@@ -79,4 +82,5 @@ public class ParkingSpotServiceImpl implements ParkingSpotService {
         List<String> neighbourHexCodes = h3.gridDisk(currHexCode, 1);
         return parkingSpotRepository.findByAddress_HexCodeIn(neighbourHexCodes);
     }
+
 }

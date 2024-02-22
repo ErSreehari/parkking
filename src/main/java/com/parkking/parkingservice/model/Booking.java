@@ -1,7 +1,7 @@
 package com.parkking.parkingservice.model;
 
+import com.parkking.parkingservice.dto.booking.SaveBooking;
 import com.parkking.parkingservice.model.user.Driver;
-import com.parkking.parkingservice.model.user.SpotOwner;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,12 +23,18 @@ public class Booking {
     private long id;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "customer_id", referencedColumnName = "id")
-    private Driver customer;
+    @JoinColumn(name = "driver_id", referencedColumnName = "id")
+    private Driver driver;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "parking_spot_id", referencedColumnName = "id")
     private ParkingSpot parkingSpot;
+
+    @Column(name = "start_date")
+    private Instant startDate;
+
+    @Column(name = "end_date")
+    private Instant endDate;
 
     @CreationTimestamp
     @Column(updatable = false)
@@ -36,4 +42,9 @@ public class Booking {
 
     @UpdateTimestamp
     private Instant updatedAt;
+
+    public Booking(SaveBooking saveBooking) {
+        this.startDate = saveBooking.getStartDate();
+        this.endDate = saveBooking.getEndDate();
+    }
 }

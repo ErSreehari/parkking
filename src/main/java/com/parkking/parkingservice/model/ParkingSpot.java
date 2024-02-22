@@ -1,5 +1,6 @@
 package com.parkking.parkingservice.model;
 
+import com.parkking.parkingservice.dto.parkingSpot.SaveParkingSpot;
 import com.parkking.parkingservice.model.user.SpotOwner;
 import com.parkking.parkingservice.model.user.User;
 import lombok.AllArgsConstructor;
@@ -41,4 +42,9 @@ public class ParkingSpot {
 
     @UpdateTimestamp
     private Instant updatedAt;
+
+    public ParkingSpot(SaveParkingSpot saveParkingSpot) {
+        this.spotType = saveParkingSpot.getSpotType();
+    }
+
 }

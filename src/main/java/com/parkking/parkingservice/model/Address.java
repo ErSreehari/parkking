@@ -1,6 +1,7 @@
 package com.parkking.parkingservice.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.parkking.parkingservice.dto.address.SaveAddress;
 import com.parkking.parkingservice.model.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -62,5 +63,16 @@ public class Address {
 
     @UpdateTimestamp
     private Instant updatedAt;
+
+    public Address(SaveAddress saveAddress) {
+        this.address = saveAddress.getAddress();
+        this.city = saveAddress.getCity();
+        this.state = saveAddress.getState();
+        this.latitude = saveAddress.getLatitude();
+        this.longitude = saveAddress.getLongitude();
+        this.landmark = saveAddress.getLandmark();
+        this.pinCode = saveAddress.getPinCode();
+        this.name = saveAddress.getName();
+    }
 
 }

@@ -1,6 +1,7 @@
 package com.parkking.parkingservice.service;
 
 import com.parkking.parkingservice.dto.parkingSpot.SaveParkingSpot;
+import com.parkking.parkingservice.dto.parkingSpot.UpdateParkingSpot;
 import com.parkking.parkingservice.model.ParkingSpot;
 
 import java.io.IOException;
@@ -14,7 +15,7 @@ public interface ParkingSpotService {
 
     ParkingSpot getParkingSpotById(Long id);
 
-    ParkingSpot updateParkingSpot(ParkingSpot parkingSpot);
+    ParkingSpot updateParkingSpot(UpdateParkingSpot updateParkingSpot);
 
     Map<String, Boolean> deleteParkingSpot(Long id);
 

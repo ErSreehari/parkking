@@ -1,4 +1,4 @@
-package com.parkking.parkingservice.dto.auth;
+package com.parkking.parkingservice.dto.user;
 
 import com.parkking.parkingservice.model.Address;
 import com.parkking.parkingservice.model.user.UserType;
@@ -16,6 +16,7 @@ public class SignUpRequest {
     private String mobileNo;
     private String email;
     private String name;
+    private UserType userType;
     private Set<Address> addresses;
 
 }
